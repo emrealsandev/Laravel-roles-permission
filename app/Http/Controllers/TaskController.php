@@ -16,8 +16,9 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all();
-        return view('tasks.tasks', compact('tasks'));
+        $currentPermission = auth()->user()->permission_name;
+        $tasks = Task::with('user')->get();
+        return view('tasks.tasks', compact('tasks','currentPermission'));
     }
 
     /**

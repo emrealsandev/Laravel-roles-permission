@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Tasks') }}
+            {{ __('Tasks')  }} - {{ Str::upper($currentPermission) }}
         </h2>
     </x-slot>
 
@@ -48,7 +48,7 @@
                                         {{ $task->desc }}
                                     </td>
                                     <td class="py-4 px-6">
-                                        {{ $task->user_id }}
+                                        {{ $task->user->name }}
                                     </td>
 
                                     <td class="py-4 px-6 mx-4">

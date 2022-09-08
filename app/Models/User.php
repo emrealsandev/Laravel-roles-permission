@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Role;
+
 
 class User extends Authenticatable
 {
@@ -41,4 +43,32 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $appends = ['permission_name'];
+
+
+    public function getPermissionNameAttribute(){
+        $permissionName = null;
+        if($this->role_id === 3){
+            $permissionName = 'Admin';
+        }
+        else if($this->role_id === 2){
+            $permissionName = 'Manager';
+        }
+        else if($this->role_id === 1){
+            $permissionName = 'User';
+        }
+        return $permissionName;
+
+    }
+
+
+
+    // Böyle user tablosundan role tablosuna erişim sağlanabilir ama performans düşer
+
+    // public function permission(){
+    //     return $this->hasOne(Role::class,'id', 'role_id');
+    // }
+
+
 }
