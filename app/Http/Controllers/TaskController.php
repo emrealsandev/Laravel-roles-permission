@@ -28,6 +28,7 @@ class TaskController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Task::class);
         return view('tasks.create');
     }
 
@@ -39,6 +40,9 @@ class TaskController extends Controller
      */
     public function store(TaskCreateRequest $request)
     {
+
+        $this->authorize('create', Task::class);
+
         // Post olan veriye user_id ekleme
         $data = [
             'title' => $request->get('title'),
@@ -69,10 +73,13 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Task $task)
     {
-        $task = Task::find($id) ?? abort(404, 'Task Not found');
-        return view('tasks.edit', compact('task'));
+
+
+        $this->authorize('update', $task);
+        $yazi = Task::find($id) ?? abort(404, 'Task Not found');
+        return view('tasks.edit', compact('yazi'));
     }
 
     /**
@@ -82,8 +89,10 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TaskUpdateRequest $request, $id)
+    public function update(TaskUpdateRequest $request, $id, Task $task)
     {
+
+        $this->authorize('update', $task);
 
         Task::find($id)->update([
             'title' => $request->get('title'),
@@ -99,8 +108,10 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Task $task)
     {
+        $this->authorize('delete',$task);
+
         Task::find($id)->delete() ?? abort(404,'Task Bulunamadı');
 
         return redirect()->route('tasks.index');

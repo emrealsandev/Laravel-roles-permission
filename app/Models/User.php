@@ -48,6 +48,9 @@ class User extends Authenticatable
 
 
     public function getPermissionNameAttribute(){
+        // 3 admin
+        // 2 menajer
+        // 1 user
         $permissionName = null;
         if($this->role_id === 3){
             $permissionName = 'Admin';
@@ -59,6 +62,7 @@ class User extends Authenticatable
             $permissionName = 'User';
         }
         return $permissionName;
+
 
     }
 
