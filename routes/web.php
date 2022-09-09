@@ -21,7 +21,6 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [MainController::class, 'index'])->name('dashboard');
 });
-Route::get('/tasks/{$id}', [TaskController::class,'destroy'])->name('tasks.destroy')->whereNumber('id');
 Route::resource('/tasks', TaskController::class);
 
 require __DIR__.'/auth.php';
