@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [MainController::class, 'index'])->name('dashboard');
+    Route::resource('/tasks', TaskController::class);
 });
-Route::resource('/tasks', TaskController::class);
 
 require __DIR__.'/auth.php';
